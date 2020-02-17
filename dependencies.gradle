@@ -1,0 +1,74 @@
+repositories {
+  mavenCentral()
+}
+
+springBoot {
+  buildInfo()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+  libraries = [
+    // Spring Essentials
+    spring_web : "org.springframework.boot:spring-boot-starter-web",
+    spring_mvc : "org.springframework.data:spring-data-rest-webmvc",
+    spring_jpa : "org.springframework.boot:spring-boot-starter-data-jpa",
+
+    // Spring Actuator
+    spring_actuator : "org.springframework.boot:spring-boot-starter-actuator",
+
+    // JDBS Drivers
+    jdbc_mariadb : "org.mariadb.jdbc:mariadb-java-client",
+
+    // Apache Commons
+    commons_io : "commons-io:commons-io:2.6",
+    commons_lang : "org.apache.commons:commons-lang3:3.7",
+
+    // Lombok
+    lombok : "org.projectlombok:lombok",
+
+    // Swagger
+    swagger_core : "io.springfox:springfox-swagger2:2.9.2",
+    swagger_ui : "io.springfox:springfox-swagger-ui:2.9.2",
+
+    // Metrix
+    micrometer : "io.micrometer:micrometer-registry-prometheus",
+    prometheus : "io.prometheus:simpleclient_pushgateway",
+
+    // Test
+    spring_test : "org.springframework.boot:spring-boot-starter-test",
+    fixture_factory : "br.com.six2six:fixture-factory:3.1.0",
+    lorem : "com.thedeanda:lorem:2.1"
+  ]
+}
+
+def libs = rootProject.ext.libraries;
+dependencies {
+  implementation libs.spring_web
+  implementation libs.spring_jpa
+  implementation libs.spring_actuator
+
+  implementation libs.commons_lang
+
+  compileOnly libs.lombok
+  annotationProcessor libs.lombok
+
+  implementation libs.swagger_core
+	implementation libs.swagger_ui
+
+  implementation libs.micrometer
+
+  testImplementation libs.spring_test
+  testImplementation libs.fixture_factory
+  testImplementation libs.lorem
+}
+
+def SHA() {
+  'git rev-parse --short HEAD'.execute().text.trim()
+}
+
+ext {
+  BUILD = this.&SHA
+}

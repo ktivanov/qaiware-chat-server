@@ -1,0 +1,22 @@
+// The plugins {} block can currently only be used in a project’s build script.
+// It cannot be used in script plugins, the settings.gradle file or init scripts.
+//
+// Future versions of Gradle will remove this restriction. Current version 6.1.1
+
+plugins {
+  id 'org.springframework.boot' version '2.2.4.RELEASE'
+  id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+  id 'java'
+  id "com.gorylenko.gradle-git-properties" version "2.2.1"
+}
+
+apply from: 'dependencies.gradle'
+
+group = 'com.qaiware'
+version = "0.0.1.${BUILD}"
+
+def libs = rootProject.ext.libraries;
+dependencies {
+  runtimeOnly("com.h2database:h2")
+  testImplementation("org.mockito:mockito-core:3.2.4")
+}
