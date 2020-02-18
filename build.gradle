@@ -10,7 +10,7 @@ plugins {
   id "com.gorylenko.gradle-git-properties" version "2.2.1"
 }
 
-apply from: "https://gitlab.com/api/v4/projects/16959414/repository/files/parent.gradle/raw?private_token=${System.env.GITLAB_TOKEN}&ref=master"
+apply from: "https://gitlab.com/api/v4/projects/16959414/repository/files/qaiware.build.gradle/raw?private_token=${System.env.GITLAB_TOKEN}&ref=master"
 
 group = 'com.qaiware'
 version = "0.0.1.${BUILD}"
