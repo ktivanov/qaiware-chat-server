@@ -6,9 +6,11 @@
 plugins {
   id 'org.springframework.boot' version '2.2.4.RELEASE'
   id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-  id 'java'
   id "com.gorylenko.gradle-git-properties" version "2.2.1"
+  id 'java'
 }
+
+rootProject.ext.javaVersion = 11
 
 apply from: "https://gitlab.com/api/v4/projects/16959414/repository/files/qaiware.build.gradle/raw?private_token=${System.env.GITLAB_TOKEN}&ref=master"
 
