@@ -1,4 +1,4 @@
-package com.qaiware.chatserver.messages.domain;
+package com.qaiware.chatserver.messages.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

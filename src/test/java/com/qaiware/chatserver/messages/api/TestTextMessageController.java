@@ -1,7 +1,7 @@
-package com.qaiware.chatserver.messages.web;
+package com.qaiware.chatserver.messages.api;
 
-import com.qaiware.chatserver.messages.repositories.MessageRepository;
 import com.qaiware.chatserver.messages.factories.TextMessageFactory;
+import com.qaiware.chatserver.messages.repositories.MessageRepository;
 import com.qaiware.chatserver.messages.validators.TextPayloadValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,9 +61,9 @@ public class TestTextMessageController {
 
   private void performPostRequest(String validPayload, ResultMatcher expectedStatus) throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.post("/messages/send_text")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(validPayload))
-        .andExpect(expectedStatus)
-        .andExpect(MockMvcResultMatchers.content().string(""));
+      .contentType(MediaType.APPLICATION_JSON)
+      .content(validPayload))
+      .andExpect(expectedStatus)
+      .andExpect(MockMvcResultMatchers.content().string(""));
   }
 }

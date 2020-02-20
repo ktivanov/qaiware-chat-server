@@ -1,8 +1,8 @@
-package com.qaiware.chatserver.messages.web;
+package com.qaiware.chatserver.messages.api;
 
 
-import com.qaiware.chatserver.messages.repositories.MessageRepository;
 import com.qaiware.chatserver.messages.factories.EmotionMessageFactory;
+import com.qaiware.chatserver.messages.repositories.MessageRepository;
 import com.qaiware.chatserver.messages.validators.EmotionPayloadValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -68,7 +68,7 @@ public class TestEmotionMessageController {
 
   private void performPostRequest(String payload, ResultMatcher expectedStatus) throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.post("/messages/send_emotion")
-        .contentType(MediaType.APPLICATION_JSON).content(payload))
-        .andExpect(expectedStatus).andExpect(MockMvcResultMatchers.content().string(""));
+      .contentType(MediaType.APPLICATION_JSON).content(payload))
+      .andExpect(expectedStatus).andExpect(MockMvcResultMatchers.content().string(""));
   }
 }

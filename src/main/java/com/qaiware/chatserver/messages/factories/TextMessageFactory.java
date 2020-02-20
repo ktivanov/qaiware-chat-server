@@ -1,6 +1,6 @@
 package com.qaiware.chatserver.messages.factories;
 
-import com.qaiware.chatserver.messages.domain.TextMessage;
+import com.qaiware.chatserver.messages.entities.TextMessage;
 import org.springframework.stereotype.Component;
 
 @Component("textMessageFactory")

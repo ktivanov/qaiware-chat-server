@@ -1,7 +1,7 @@
-package com.qaiware.chatserver.messages.web;
+package com.qaiware.chatserver.messages.api;
 
-import com.qaiware.chatserver.messages.repositories.MessageRepository;
 import com.qaiware.chatserver.messages.factories.MessageFactory;
+import com.qaiware.chatserver.messages.repositories.MessageRepository;
 import com.qaiware.chatserver.messages.validators.PayloadValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.qaiware.chatserver.messages.web;
+package com.qaiware.chatserver.messages.api;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
