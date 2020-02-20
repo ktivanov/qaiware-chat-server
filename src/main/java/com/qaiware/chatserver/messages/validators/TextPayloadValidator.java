@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 @Component("textPayloadValidator")
 public class TextPayloadValidator implements PayloadValidator {
 
-    @Override
-    public boolean isPayloadValid(String payload) {
-        return payload.length() > 0 && payload.length() <= 160;
-    }
+  @Override
+  public boolean isPayloadValid(String payload) {
+    return payload.length() > 0 && payload.length() <= 160;
+  }
 }

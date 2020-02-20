@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component("emotionMessageFactory")
 public class EmotionMessageFactory implements MessageFactory<EmotionMessage> {
 
-    @Override
-    public EmotionMessage createMessage(String payload) {
-        return new EmotionMessage(payload);
-    }
+  @Override
+  public EmotionMessage createMessage(String payload) {
+    return new EmotionMessage(payload);
+  }
 }

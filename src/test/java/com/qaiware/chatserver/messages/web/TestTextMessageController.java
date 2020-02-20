@@ -14,58 +14,56 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class TestTextMessageController {
 
-    private MockMvc mockMvc;
+  @Mock
+  TextMessageFactory textMessageFactory;
+  @Mock(answer = Answers.CALLS_REAL_METHODS)
+  TextPayloadValidator textPayloadValidator;
+  @Mock
+  MessageRepository messageRepository;
+  private MockMvc mockMvc;
+  @InjectMocks
+  private TextMessageController textMessageController;
 
-    @Mock
-    TextMessageFactory textMessageFactory;
+  @BeforeEach
+  public void setUp() {
+    mockMvc = MockMvcBuilders.standaloneSetup(textMessageController).build();
+  }
 
-    @Mock(answer = Answers.CALLS_REAL_METHODS)
-    TextPayloadValidator textPayloadValidator;
+  @Test
+  public void testStatusIsCreated() throws Exception {
+    String validPayload = "{\"payload\":\"Hello!\"}";
+    performPostRequest(validPayload, MockMvcResultMatchers.status().isCreated());
+  }
 
-    @Mock
-    MessageRepository messageRepository;
+  @Test
+  public void testStatusIsPreconditionFailedTooShortPayload() throws Exception {
 
-    @InjectMocks
-    private TextMessageController textMessageController;
+    String tooShortPayload = "{\"payload\":\"\"}";
+    performPostRequest(tooShortPayload, MockMvcResultMatchers.status().isPreconditionFailed());
+  }
 
-    @BeforeEach
-    public void setUp(){
-        mockMvc = standaloneSetup(textMessageController).build();
-    }
-
-    @Test
-    public void testStatusIsCreated() throws Exception {
-        String validPayload = "{\"payload\":\"Hello!\"}";
-        performPostRequest(validPayload, status().isCreated());
-    }
-
-    @Test
-    public void testStatusIsPreconditionFailedTooShortPayload() throws Exception {
-        String tooShortPayload = "{\"payload\":\"\"}";
-        performPostRequest(tooShortPayload, status().isPreconditionFailed());
-    }
-
-    @Test
-    public void testStatusIsPreconditionFailedTooLongPayload() throws Exception {
-        String tooLongPayload = "{\"payload\":\"testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestt\"}";
-        performPostRequest(tooLongPayload, status().isPreconditionFailed());
-    }
+  @Test
+  public void testStatusIsPreconditionFailedTooLongPayload() throws Exception {
+    String payload = "esttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";
+    payload += "testtesttesttesttesttesttestttesttesttesttesttesttesttesttesttesttestt";
+    String tooLongPayload = "{\"payload\":\"" + payload + "\"}";
+    performPostRequest(tooLongPayload, MockMvcResultMatchers.status().isPreconditionFailed());
+  }
 
 
-    private void performPostRequest(String validPayload, ResultMatcher expectedStatus) throws Exception {
-        mockMvc.perform(post("/messages/send_text")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(validPayload))
-                .andExpect(expectedStatus)
-                .andExpect(content().string(""));
-    }
+  private void performPostRequest(String validPayload, ResultMatcher expectedStatus) throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.post("/messages/send_text")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(validPayload))
+        .andExpect(expectedStatus)
+        .andExpect(MockMvcResultMatchers.content().string(""));
+  }
 }

@@ -2,22 +2,34 @@
 // It cannot be used in script plugins, the settings.gradle file or init scripts.
 //
 // Future versions of Gradle will remove this restriction. Current version 6.1.1
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'org.owasp:dependency-check-gradle:5.3.0'
+  }
+}
 
 plugins {
   id 'org.springframework.boot' version '2.2.4.RELEASE'
   id 'io.spring.dependency-management' version '1.0.9.RELEASE'
   id "com.gorylenko.gradle-git-properties" version "2.2.1"
+//  id "com.github.hierynomus.license-report" version"0.15.0"
+  id 'com.github.jk1.dependency-license-report' version '1.13'
   id 'java'
 }
 
+apply plugin: 'org.owasp.dependencycheck'
+
 rootProject.ext.javaVersion = 11
 
+// apply from: "/Users/nikoloff/QaiWare/JavaCommons/gradle-build/qaiware.build.gradle"
 apply from: "https://gitlab.com/api/v4/projects/16959414/repository/files/qaiware.build.gradle/raw?private_token=${System.env.GITLAB_TOKEN}&ref=master"
 
 group = 'com.qaiware'
 version = "0.0.1.${BUILD}"
 
-def libs = rootProject.ext.libraries;
 dependencies {
   runtimeOnly("com.h2database:h2")
 }

@@ -5,9 +5,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "messages")
-public class EmotionMessage extends Message{
-    public EmotionMessage(String payload) {
-        super(payload);
-        this.setType(MessageType.EMOTION);
-    }
+public class EmotionMessage extends Message {
+  public EmotionMessage(String payload) {
+    super(payload);
+    this.setType(MessageType.EMOTION);
+  }
 }
